@@ -1,13 +1,13 @@
-FROM golang:1.24
+FROM golang:1.21-alpine
 
 LABEL authors="esnas"
 
-# Устанавливаем зависимости
+# Устанавливаем зависимости для компиляции
 RUN apk add --no-cache gcc musl-dev git
 
 WORKDIR /app
 
-# Копируем зависимости и скачиваем их
+# Копируем файлы модулей
 COPY go.mod go.sum ./
 RUN go mod download
 
@@ -19,5 +19,4 @@ RUN go build -o main ./cmd/app
 
 EXPOSE 8080
 
-# Запускаем приложение
 CMD ["./main"]
